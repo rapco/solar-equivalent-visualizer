@@ -32,7 +32,7 @@ export default function SolarField({ count, panelSpecs }) {
 
   return (
     <Canvas 
-      camera={{ position: [5, 22, 30], fov: 50 }}
+      camera={{ position: [5, 20, 28], fov: 50 }}
       style={{ background: "#0f172a" }}
     >
       <ambientLight intensity={1.2} />
@@ -47,13 +47,13 @@ export default function SolarField({ count, panelSpecs }) {
         <meshStandardMaterial color="#22c55e" roughness={0.8} />
       </mesh>
 
-      {/* Referencias (Torre de 20m y Humano) ubicadas limpiamente a la izquierda */}
-      <group position={[-14, 0, 0]}>
+      {/* Referencias (Torre de 20m y Humano) más cerca, ubicadas a una distancia limpia de 6 unidades */}
+      <group position={[-6, 0, 0]}>
         <Human />
       </group>
 
-      {/* Arreglo de paneles solares desplazado a la derecha para evitar cualquier overlap */}
-      <group position={[4, 0, -totalDepth / 2]}>
+      {/* Arreglo de paneles solares colocado más cerca hacia la derecha (en la coordenada 2) */}
+      <group position={[2, 0, -totalDepth / 2]}>
          {panels}
          
          {/* Guía visual perimetral de la huella en m² */}
