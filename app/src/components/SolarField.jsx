@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Html } from "@react-three/drei";
+import * as THREE from "three";
 import Panel from "./Panel";
 import Human from "./Human";
 
@@ -43,7 +44,7 @@ export default function SolarField({ count, panelSpecs }) {
       {/* Referencia humana y torre */}
       <Human />
 
-      {/* Terreno de césped verde (Pasture ground) */}
+      {/* Terreno de césped verde */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial color="#22c55e" roughness={0.8} />
