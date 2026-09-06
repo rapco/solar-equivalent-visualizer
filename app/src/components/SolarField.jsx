@@ -6,8 +6,8 @@ import Human from "./Human";
 
 export default function SolarField({ count, panelSpecs }) {
   const panels = [];
-  const spacingX = panelSpecs.width + 0.08; 
-  const spacingZ = panelSpecs.length + 0.08;
+  const spacingX = panelSpecs.width + 0.1; 
+  const spacingZ = panelSpecs.length + 0.1;
 
   const cols = Math.ceil(Math.sqrt(count));
   const rows = Math.ceil(count / cols);
@@ -32,7 +32,7 @@ export default function SolarField({ count, panelSpecs }) {
 
   return (
     <Canvas 
-      camera={{ position: [15, 20, 25], fov: 50 }}
+      camera={{ position: [5, 22, 30], fov: 50 }}
       style={{ background: "#0f172a" }}
     >
       <ambientLight intensity={1.2} />
@@ -41,28 +41,30 @@ export default function SolarField({ count, panelSpecs }) {
       
       <OrbitControls makeDefault />
       
-      {/* Referencia humana y torre */}
-      <Human />
-
-      {/* Terreno de césped verde */}
+      {/* Terreno de césped verde extendido */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-        <planeGeometry args={[100, 100]} />
+        <planeGeometry args={[120, 120]} />
         <meshStandardMaterial color="#22c55e" roughness={0.8} />
       </mesh>
 
-      {/* Arreglo de paneles y guías visuales de área */}
-      <group position={[-totalWidth / 2, 0, -totalDepth / 2]}>
+      {/* Referencias (Torre de 20m y Humano) ubicadas limpiamente a la izquierda */}
+      <group position={[-14, 0, 0]}>
+        <Human />
+      </group>
+
+      {/* Arreglo de paneles solares desplazado a la derecha para evitar cualquier overlap */}
+      <group position={[4, 0, -totalDepth / 2]}>
          {panels}
          
          {/* Guía visual perimetral de la huella en m² */}
-         <lineSegments>
+         <lineSegments position={[totalWidth / 2, 0, totalDepth / 2]}>
            <edgesGeometry args={[new THREE.BoxGeometry(totalWidth, 0.1, totalDepth)]} />
            <lineBasicMaterial color="#ffffff" linewidth={2} />
          </lineSegments>
 
-         {/* Etiquetas flotantes con las medidas de Ancho y Profundidad */}
-         <Html position={[totalWidth / 2, 0.5, totalDepth / 2]}>
-           <div style={{ background: 'rgba(15, 23, 42, 0.85)', color: '#38bdf8', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', whiteSpace: 'nowrap', border: '1px solid #334155' }}>
+         {/* Etiqueta flotante con las medidas exactas */}
+         <Html position={[totalWidth, 0.5, totalDepth]}>
+           <div style={{ background: 'rgba(15, 23, 42, 0.9)', color: '#38bdf8', padding: '6px 10px', borderRadius: '6px', fontSize: '13px', whiteSpace: 'nowrap', border: '1px solid #334155', fontWeight: 'bold' }}>
              {totalWidth.toFixed(1)}m x {totalDepth.toFixed(1)}m ({ (totalWidth * totalDepth).toFixed(1) } m²)
            </div>
          </Html>
