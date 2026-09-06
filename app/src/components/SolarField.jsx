@@ -5,10 +5,9 @@ import Human from "./Human";
 
 export default function SolarField({ count, panelSpecs }) {
   const panels = [];
-  const spacingX = panelSpecs.width + 0.05; 
-  const spacingZ = panelSpecs.length + 0.05;
+  const spacingX = panelSpecs.width + 0.08; 
+  const spacingZ = panelSpecs.length + 0.08;
 
-  // Forzamos una distribución en forma de matriz cuadrada (filas ≈ columnas)
   const cols = Math.ceil(Math.sqrt(count));
 
   for (let i = 0; i < count; i++) {
@@ -30,15 +29,21 @@ export default function SolarField({ count, panelSpecs }) {
   const totalDepth = Math.ceil(count / cols) * spacingZ;
 
   return (
-    <Canvas camera={{ position: [10, 15, 25] }}>
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[10, 20, 10]} intensity={1.2} />
-      <OrbitControls />
+    <Canvas 
+      camera={{ position: [15, 20, 25], fov: 50 }}
+      style={{ background: "#1e293b" }} // Fondo azul grisáceo suave estilo SimCity
+    >
+      {/* Iluminación brillante estilo diurno */}
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[20, 40, 20]} intensity={1.8} castShadow />
+      <directionalLight position={[-20, 20, -20]} intensity={0.5} />
       
-      {/* Referencias de escala: Torre de 20m y humano de 1.7m */}
+      <OrbitControls makeDefault />
+      
+      {/* Referencias */}
       <Human />
 
-      {/* Arreglo de paneles centrado con proporción cuadrada */}
+      {/* Arreglo de paneles */}
       <group position={[-totalWidth / 2, 0, -totalDepth / 2]}>
          {panels}
       </group>
