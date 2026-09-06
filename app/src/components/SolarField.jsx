@@ -8,9 +8,12 @@ export default function SolarField({ count, panelSpecs }) {
   const spacingX = panelSpecs.width + 0.05; 
   const spacingZ = panelSpecs.length + 0.05;
 
+  // Forzamos una distribución en forma de matriz cuadrada (filas ≈ columnas)
+  const cols = Math.ceil(Math.sqrt(count));
+
   for (let i = 0; i < count; i++) {
-    const row = Math.floor(i / 5);
-    const col = i % 5;
+    const row = Math.floor(i / cols);
+    const col = i % cols;
 
     panels.push(
       <Panel
@@ -23,17 +26,20 @@ export default function SolarField({ count, panelSpecs }) {
     );
   }
 
+  const totalWidth = cols * spacingX;
+  const totalDepth = Math.ceil(count / cols) * spacingZ;
+
   return (
-    <Canvas camera={{ position: [5, 8, 12] }}>
+    <Canvas camera={{ position: [10, 15, 25] }}>
       <ambientLight intensity={0.7} />
       <directionalLight position={[10, 20, 10]} intensity={1.2} />
       <OrbitControls />
       
-      {/* Referencia humana de 1.7m al lado del arreglo */}
+      {/* Referencias de escala: Torre de 20m y humano de 1.7m */}
       <Human />
 
-      {/* Arreglo de paneles centrado */}
-      <group position={[-((5 * spacingX) / 2), 0, -((Math.ceil(count/5) * spacingZ) / 2)]}>
+      {/* Arreglo de paneles centrado con proporción cuadrada */}
+      <group position={[-totalWidth / 2, 0, -totalDepth / 2]}>
          {panels}
       </group>
     </Canvas>
