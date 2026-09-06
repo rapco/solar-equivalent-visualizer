@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", backgroundColor: "#0F172A" }}>
-      {/* Lienzo 3D de fondo absoluto */}
+      {/* Lienzo 3D de fondo */}
       <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
         <SolarField
           count={result.panels}
@@ -38,7 +38,7 @@ export default function App() {
         borderRadius: "12px",
         border: "1px solid #334155",
         boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)",
-        width: "340px",
+        width: "360px",
         textAlign: "left",
         color: "#F8FAFC"
       }}>
@@ -64,10 +64,24 @@ export default function App() {
         </div>
 
         {panelType === "custom" && (
-          <div style={{ marginBottom: "14px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
-            <input type="number" placeholder="W" value={customPanel.powerW} onChange={(e) => setCustomPanel({ ...customPanel, powerW: Number(e.target.value) })} />
-            <input type="number" step="0.01" placeholder="L(m)" value={customPanel.lengthM} onChange={(e) => setCustomPanel({ ...customPanel, lengthM: Number(e.target.value) })} />
-            <input type="number" step="0.01" placeholder="A(m)" value={customPanel.widthM} onChange={(e) => setCustomPanel({ ...customPanel, widthM: Number(e.target.value) })} />
+          <div style={{ marginBottom: "14px", background: "rgba(15, 23, 42, 0.6)", padding: "12px", borderRadius: "8px", border: "1px solid #334155" }}>
+            <label style={{ fontSize: "12px", color: "#38bdf8", display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+              Especificaciones del Panel Personalizado:
+            </label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                <span style={{ fontSize: "10px", color: "#94A3B8" }}>Potencia</span>
+                <input type="number" placeholder="W" value={customPanel.powerW} onChange={(e) => setCustomPanel({ ...customPanel, powerW: Number(e.target.value) })} style={{ width: "100%", boxSizing: "border-box", fontSize: "13px", padding: "6px" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                <span style={{ fontSize: "10px", color: "#94A3B8" }}>Largo</span>
+                <input type="number" step="0.01" placeholder="Metros" value={customPanel.lengthM} onChange={(e) => setCustomPanel({ ...customPanel, lengthM: Number(e.target.value) })} style={{ width: "100%", boxSizing: "border-box", fontSize: "13px", padding: "6px" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                <span style={{ fontSize: "10px", color: "#94A3B8" }}>Ancho</span>
+                <input type="number" step="0.01" placeholder="Metros" value={customPanel.widthM} onChange={(e) => setCustomPanel({ ...customPanel, widthM: Number(e.target.value) })} style={{ width: "100%", boxSizing: "border-box", fontSize: "13px", padding: "6px" }} />
+              </div>
+            </div>
           </div>
         )}
 
