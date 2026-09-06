@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Html } from "@react-three/drei";
 import Panel from "./Panel";
 import Human from "./Human";
 
@@ -9,6 +9,7 @@ export default function SolarField({ count, panelSpecs }) {
   const spacingZ = panelSpecs.length + 0.08;
 
   const cols = Math.ceil(Math.sqrt(count));
+  const rows = Math.ceil(count / cols);
 
   for (let i = 0; i < count; i++) {
     const row = Math.floor(i / cols);
@@ -26,26 +27,44 @@ export default function SolarField({ count, panelSpecs }) {
   }
 
   const totalWidth = cols * spacingX;
-  const totalDepth = Math.ceil(count / cols) * spacingZ;
+  const totalDepth = rows * spacingZ;
 
   return (
     <Canvas 
       camera={{ position: [15, 20, 25], fov: 50 }}
-      style={{ background: "#1e293b" }} // Fondo azul grisáceo suave estilo SimCity
+      style={{ background: "#0f172a" }}
     >
-      {/* Iluminación brillante estilo diurno */}
       <ambientLight intensity={1.2} />
-      <directionalLight position={[20, 40, 20]} intensity={1.8} castShadow />
+      <directionalLight position={[20, 40, 20]} intensity={1.8} />
       <directionalLight position={[-20, 20, -20]} intensity={0.5} />
       
       <OrbitControls makeDefault />
       
-      {/* Referencias */}
+      {/* Referencia humana y torre */}
       <Human />
 
-      {/* Arreglo de paneles */}
+      {/* Terreno de césped verde (Pasture ground) */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color="#22c55e" roughness={0.8} />
+      </mesh>
+
+      {/* Arreglo de paneles y guías visuales de área */}
       <group position={[-totalWidth / 2, 0, -totalDepth / 2]}>
          {panels}
+         
+         {/* Guía visual perimetral de la huella en m² */}
+         <lineSegments>
+           <edgesGeometry args={[new THREE.BoxGeometry(totalWidth, 0.1, totalDepth)]} />
+           <lineBasicMaterial color="#ffffff" linewidth={2} />
+         </lineSegments>
+
+         {/* Etiquetas flotantes con las medidas de Ancho y Profundidad */}
+         <Html position={[totalWidth / 2, 0.5, totalDepth / 2]}>
+           <div style={{ background: 'rgba(15, 23, 42, 0.85)', color: '#38bdf8', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', whiteSpace: 'nowrap', border: '1px solid #334155' }}>
+             {totalWidth.toFixed(1)}m x {totalDepth.toFixed(1)}m ({ (totalWidth * totalDepth).toFixed(1) } m²)
+           </div>
+         </Html>
       </group>
     </Canvas>
   );
