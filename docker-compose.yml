@@ -1,0 +1,12 @@
+services:
+  solar-visualizer:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+
+    container_name: solar-visualizer
+
+    restart: unless-stopped
+
+    ports:
+      - "8080:80"
