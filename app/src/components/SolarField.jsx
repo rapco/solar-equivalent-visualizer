@@ -31,40 +31,44 @@ export default function SolarField({ count, panelSpecs }) {
   const totalDepth = rows * spacingZ;
 
   return (
-    <Canvas 
-      camera={{ position: [5, 20, 28], fov: 50 }}
-      style={{ background: "#0f172a" }}
-    >
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[20, 40, 20]} intensity={1.8} />
-      <directionalLight position={[-20, 20, -20]} intensity={0.5} />
+    <Canvas camera={{ position: [5, 25, 38], fov: 50 }} style={{ background: "#1e293b" }}>
+      {/* Iluminación clara estilo diurno */}
+      <ambientLight intensity={1.4} />
+      <directionalLight position={[25, 45, 25]} intensity={2.0} />
+      <directionalLight position={[-25, 25, -25]} intensity={0.8} />
       
       <OrbitControls makeDefault />
       
-      {/* Terreno de césped verde extendido */}
+      {/* Terreno de césped verde claro */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-        <planeGeometry args={[120, 120]} />
-        <meshStandardMaterial color="#22c55e" roughness={0.8} />
+        <planeGeometry args={[140, 140]} />
+        <meshStandardMaterial color="#4ade80" roughness={0.7} />
       </mesh>
 
-      {/* Referencias (Torre de 20m y Humano) más cerca, ubicadas a una distancia limpia de 6 unidades */}
-      <group position={[-6, 0, 0]}>
+      {/* Terreno de referencia de la torre (10x10m) ubicado a la izquierda */}
+      <group position={[-12, 0, -5]}>
         <Human />
       </group>
 
-      {/* Arreglo de paneles solares colocado más cerca hacia la derecha (en la coordenada 2) */}
-      <group position={[2, 0, -totalDepth / 2]}>
+      {/* Campo de paneles solares contiguo a la derecha con grilla tenue de 10m */}
+      <group position={[1, 0, -totalDepth / 2]}>
          {panels}
          
-         {/* Guía visual perimetral de la huella en m² */}
+         {/* Grilla tenue de 10m x 10m sobre el campo de paneles */}
+         <gridHelper 
+           args={[Math.max(totalWidth, totalDepth, 40), Math.max(Math.ceil(Math.max(totalWidth, totalDepth)/10), 4), '#cbd5e1', '#e2e8f0']} 
+           position={[totalWidth / 2, 0.01, totalDepth / 2]} 
+         />
+
+         {/* Contorno perimetral con colores claros */}
          <lineSegments position={[totalWidth / 2, 0, totalDepth / 2]}>
            <edgesGeometry args={[new THREE.BoxGeometry(totalWidth, 0.1, totalDepth)]} />
-           <lineBasicMaterial color="#ffffff" linewidth={2} />
+           <lineBasicMaterial color="#f8fafc" linewidth={2} />
          </lineSegments>
 
-         {/* Etiqueta flotante con las medidas exactas */}
+         {/* Etiqueta flotante de dimensiones */}
          <Html position={[totalWidth, 0.5, totalDepth]}>
-           <div style={{ background: 'rgba(15, 23, 42, 0.9)', color: '#38bdf8', padding: '6px 10px', borderRadius: '6px', fontSize: '13px', whiteSpace: 'nowrap', border: '1px solid #334155', fontWeight: 'bold' }}>
+           <div style={{ background: 'rgba(30, 41, 59, 0.95)', color: '#38bdf8', padding: '6px 10px', borderRadius: '6px', fontSize: '13px', whiteSpace: 'nowrap', border: '1px solid #64748b', fontWeight: 'bold' }}>
              {totalWidth.toFixed(1)}m x {totalDepth.toFixed(1)}m ({ (totalWidth * totalDepth).toFixed(1) } m²)
            </div>
          </Html>
