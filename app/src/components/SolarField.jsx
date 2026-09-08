@@ -30,10 +30,10 @@ export default function SolarField({ count, panelSpecs }) {
   const totalWidth = cols * spacingX;
   const totalDepth = rows * spacingZ;
 
-  // Cálculo de tamaño fijo en bloques de 10m x 10m
+  // Tamaño de la grilla que se expande modularmente en bloques de 10m
   const gridSize = Math.max(
     Math.ceil(Math.max(totalWidth, totalDepth) / 10) * 10,
-    100
+    40
   );
 
   return (
@@ -44,9 +44,9 @@ export default function SolarField({ count, panelSpecs }) {
       
       <OrbitControls makeDefault />
       
-      {/* Terreno de césped verde claro */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-        <planeGeometry args={[140, 140]} />
+      {/* Terreno de césped verde dinámico que crece junto con la grilla */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[gridSize / 2, -0.01, gridSize / 2]}>
+        <planeGeometry args={[gridSize + 10, gridSize + 10]} />
         <meshStandardMaterial color="#4ade80" roughness={0.7} />
       </mesh>
 
@@ -55,11 +55,11 @@ export default function SolarField({ count, panelSpecs }) {
         <Human />
       </group>
 
-      {/* Campo de paneles solares contiguo a la derecha con grilla fija de 10m */}
+      {/* Campo de paneles solares contiguo con grilla expansible de 10m */}
       <group position={[1, 0, -totalDepth / 2]}>
          {panels}
          
-         {/* Grilla estándar fija de 10m x 10m (100 m² por celda) */}
+         {/* Grilla estándar de 10m x 10m ajustada al volumen de paneles */}
          <gridHelper 
            args={[
              gridSize,
