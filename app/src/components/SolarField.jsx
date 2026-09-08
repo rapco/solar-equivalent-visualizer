@@ -30,7 +30,6 @@ export default function SolarField({ count, panelSpecs }) {
   const totalWidth = cols * spacingX;
   const totalDepth = rows * spacingZ;
 
-  // Tamaño dinámico de la grilla basado en el campo de paneles
   const gridSize = Math.max(
     Math.ceil(Math.max(totalWidth, totalDepth) / 10) * 10,
     60
@@ -66,20 +65,17 @@ export default function SolarField({ count, panelSpecs }) {
         <Human />
       </group>
 
-      {/* Campo de paneles solares posicionado a un lado (ej. hacia la derecha/frente) creciendo orgánicamente */}
+      {/* Campo de paneles solares posicionado a la derecha/frente creciendo orgánicamente */}
       <group position={[8, 0, 2]}>
-         {/* Arreglo de paneles centrado en su propio bloque */}
          <group position={[-totalWidth / 2, 0, -totalDepth / 2]}>
            {panels}
          </group>
 
-         {/* Contorno perimetral del campo */}
          <lineSegments position={[0, 0, 0]}>
            <edgesGeometry args={[new THREE.BoxGeometry(totalWidth, 0.1, totalDepth)]} />
            <lineBasicMaterial color="#f8fafc" linewidth={2} />
          </lineSegments>
 
-         {/* Etiqueta flotante de dimensiones */}
          <Html position={[totalWidth / 2, 0.5, totalDepth / 2]}>
            <div style={{ background: 'rgba(30, 41, 59, 0.95)', color: '#38bdf8', padding: '6px 10px', borderRadius: '6px', fontSize: '13px', whiteSpace: 'nowrap', border: '1px solid #64748b', fontWeight: 'bold' }}>
              {totalWidth.toFixed(1)}m x {totalDepth.toFixed(1)}m ({ (totalWidth * totalDepth).toFixed(1) } m²)

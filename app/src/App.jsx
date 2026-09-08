@@ -54,9 +54,6 @@ export default function App() {
     efficiency
   );
 
-  const equivalentSquares =
-    Number(result.area) / 100;
-
   return (
     <div
       style={{
@@ -370,9 +367,9 @@ export default function App() {
             }}
           >
             <strong>
-              Area Required:
+              Area Required (Terrain):
             </strong>{" "}
-            {result.area} m²
+            {result.area} m² ({result.dimensions})
           </p>
 
           <p
@@ -383,7 +380,7 @@ export default function App() {
             <strong>
               10m × 10m Squares:
             </strong>{" "}
-            {equivalentSquares.toFixed(1)}
+            {result.squares}
           </p>
 
           <p
