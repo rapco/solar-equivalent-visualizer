@@ -30,9 +30,14 @@ export default function SolarField({ count, panelSpecs }) {
   const totalWidth = cols * spacingX;
   const totalDepth = rows * spacingZ;
 
+  // Cálculo de tamaño fijo en bloques de 10m x 10m
+  const gridSize = Math.max(
+    Math.ceil(Math.max(totalWidth, totalDepth) / 10) * 10,
+    100
+  );
+
   return (
     <Canvas camera={{ position: [5, 25, 38], fov: 50 }} style={{ background: "#1e293b" }}>
-      {/* Iluminación clara estilo diurno */}
       <ambientLight intensity={1.4} />
       <directionalLight position={[25, 45, 25]} intensity={2.0} />
       <directionalLight position={[-25, 25, -25]} intensity={0.8} />
@@ -50,17 +55,22 @@ export default function SolarField({ count, panelSpecs }) {
         <Human />
       </group>
 
-      {/* Campo de paneles solares contiguo a la derecha con grilla tenue de 10m */}
+      {/* Campo de paneles solares contiguo a la derecha con grilla fija de 10m */}
       <group position={[1, 0, -totalDepth / 2]}>
          {panels}
          
-         {/* Grilla tenue de 10m x 10m sobre el campo de paneles */}
+         {/* Grilla estándar fija de 10m x 10m (100 m² por celda) */}
          <gridHelper 
-           args={[Math.max(totalWidth, totalDepth, 40), Math.max(Math.ceil(Math.max(totalWidth, totalDepth)/10), 4), '#cbd5e1', '#e2e8f0']} 
-           position={[totalWidth / 2, 0.01, totalDepth / 2]} 
+           args={[
+             gridSize,
+             gridSize / 10,
+             "#94a3b8",
+             "#cbd5e1"
+           ]} 
+           position={[gridSize / 2, 0.01, gridSize / 2]} 
          />
 
-         {/* Contorno perimetral con colores claros */}
+         {/* Contorno perimetral */}
          <lineSegments position={[totalWidth / 2, 0, totalDepth / 2]}>
            <edgesGeometry args={[new THREE.BoxGeometry(totalWidth, 0.1, totalDepth)]} />
            <lineBasicMaterial color="#f8fafc" linewidth={2} />
