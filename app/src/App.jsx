@@ -94,7 +94,7 @@ export default function App() {
           borderRadius: "12px",
           border: "1px solid #334155",
           boxShadow: "0 10px 25px -5px rgba(0,0,0,0.5)",
-          width: "360px",
+          width: "380px",
           textAlign: "left",
           color: "#F8FAFC"
         }}
@@ -106,7 +106,7 @@ export default function App() {
             marginTop: 0
           }}
         >
-          Solar Equivalent Visualizer
+          Visualizador de Equivalencia Solar
         </h2>
 
         {/* Demand Type */}
@@ -124,7 +124,7 @@ export default function App() {
               color: "#94A3B8"
             }}
           >
-            Power Demand
+            Demanda de Potencia
           </label>
 
           <select
@@ -134,15 +134,15 @@ export default function App() {
             }
           >
             <option value="type1">
-              Cell Site Type 1 (144,000 kWh/year)
+              Sitio Celular Tipo 1 (144,000 kWh/año)
             </option>
 
             <option value="type2">
-              Cell Site Type 2 (288,000 kWh/year)
+              Sitio Celular Tipo 2 (288,000 kWh/año)
             </option>
 
             <option value="custom">
-              Custom
+              Personalizada
             </option>
           </select>
         </div>
@@ -163,7 +163,7 @@ export default function App() {
                 color: "#94A3B8"
               }}
             >
-              Annual Demand (kWh/year)
+              Demanda Anual (kWh/año)
             </label>
 
             <input
@@ -191,7 +191,7 @@ export default function App() {
               color: "#94A3B8"
             }}
           >
-            System Efficiency:{" "}
+            Eficiencia del Sistema:{" "}
             {efficiency.toFixed(1)}%
           </label>
 
@@ -227,7 +227,7 @@ export default function App() {
               color: "#94A3B8"
             }}
           >
-            Panel Model
+            Modelo de Panel
           </label>
 
           <select
@@ -245,7 +245,7 @@ export default function App() {
             </option>
 
             <option value="custom">
-              Custom...
+              Personalizado...
             </option>
           </select>
         </div>
@@ -270,7 +270,7 @@ export default function App() {
                 fontWeight: "bold"
               }}
             >
-              Custom Panel
+              Panel Personalizado
             </label>
 
             <div
@@ -283,7 +283,7 @@ export default function App() {
             >
               <input
                 type="number"
-                placeholder="Watts"
+                placeholder="Vatios"
                 value={customPanel.powerW}
                 onChange={(e) =>
                   setCustomPanel({
@@ -298,7 +298,7 @@ export default function App() {
               <input
                 type="number"
                 step="0.01"
-                placeholder="Length"
+                placeholder="Largo"
                 value={customPanel.lengthM}
                 onChange={(e) =>
                   setCustomPanel({
@@ -313,7 +313,7 @@ export default function App() {
               <input
                 type="number"
                 step="0.01"
-                placeholder="Width"
+                placeholder="Ancho"
                 value={customPanel.widthM}
                 onChange={(e) =>
                   setCustomPanel({
@@ -341,7 +341,7 @@ export default function App() {
         >
           <p>
             <strong>
-              Annual Demand:
+              Demanda Anual:
             </strong>{" "}
             {annualDemand.toLocaleString()}
             {" "}kWh
@@ -349,14 +349,14 @@ export default function App() {
 
           <p>
             <strong>
-              Efficiency:
+              Eficiencia:
             </strong>{" "}
             {efficiency.toFixed(1)}%
           </p>
 
           <p>
             <strong>
-              Required Panels:
+              Paneles Requeridos:
             </strong>{" "}
             {result.panels}
           </p>
@@ -367,7 +367,18 @@ export default function App() {
             }}
           >
             <strong>
-              Area Required (Terrain):
+              Área Neta (Paneles):
+            </strong>{" "}
+            {result.netArea} m²
+          </p>
+
+          <p
+            style={{
+              color: "#38BDF8"
+            }}
+          >
+            <strong>
+              Área Total en Terreno:
             </strong>{" "}
             {result.area} m² ({result.dimensions})
           </p>
@@ -378,7 +389,7 @@ export default function App() {
             }}
           >
             <strong>
-              10m × 10m Squares:
+              Cuadrados de 10m × 10m:
             </strong>{" "}
             {result.squares}
           </p>
@@ -389,7 +400,7 @@ export default function App() {
             }}
           >
             <strong>
-              Installed Capacity:
+              Capacidad Instalada:
             </strong>{" "}
             {result.capacity} kWp
           </p>
