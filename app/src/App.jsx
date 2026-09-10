@@ -18,9 +18,9 @@ export default function App() {
 
   const annualDemand =
     demandMode === "type1"
-      ? 144000
+      ? 14400
       : demandMode === "type2"
-      ? 288000
+      ? 28800
       : customDemand;
 
   const panelDatabase = {
